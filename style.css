@@ -128,7 +128,7 @@ body {
   color: var(--clr-primary-400);
 }
 
-p:not([class]){
+p:not([class]) {
   /* p:not([class]) means if I did other things with it like changed the color, I probably  want the color
   to stick and not the opacity to drop down  */
   opacity: 0.7;
@@ -136,13 +136,14 @@ p:not([class]){
   /* Setting actual width will lock it in where as max-width means don't get smaller than that */
 }
 
-p[data-width="wide"]{
-  max-width: 42ch;
+p[data-width="wide"] {
+  max-width: 100%;
 }
 
 /* Button */
 .button {
   display: inline-flex;
+  /* We want to push the button to the right, but as it is an inline element margin-left won't work on it */
   cursor: pointer;
   text-decoration: none;
   border: 0;
@@ -261,12 +262,39 @@ p[data-width="wide"]{
   }
 }
 
+/* cta */
+.cta {
+  position: relative;
+  isolation: isolate;
+  text-align: center;
+}
+
+@media(min-width: 50em) {
+  .cta {
+    text-align: left;
+  }
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  /* This will push the element to the back, to counter this we use isolation property with isolate
+   which prevents it from going behind that element, creates stacking context  */
+  inset: 0;
+  background-image: url("images/bg-tablet-pattern.svg"),
+    url("images/bg-tablet-pattern.svg");
+  background-position: -15rem -5rem, 80rem -42rem;
+  background-repeat: no-repeat;
+  opacity: .1;
+}
+
 .opened {
   display: block;
   position: fixed;
 }
 
-/* Utility classes */
+/* General Styling */
 .visually-hidden {
   position: absolute;
   position: absolute !important;
@@ -295,15 +323,6 @@ p[data-width="wide"]{
   /* Margin inline is your left or right or both margins  */
 }
 
-:where(.flow >:not(:first-child)){
-  /* :where has zero specificy, if we had used :not without :where then we cannot change the style
-  as it has higher specificy */
-  margin-top: var(--flow-spacer, 3em);
-  /* The var will choose either --flow-spacer or the default value */
-}
-
-/* General Styling */
-
 .even-columns {
   display: grid;
   gap: 1rem;
@@ -321,6 +340,29 @@ p[data-width="wide"]{
   }
 }
 
+.justify-self-end {
+  justify-self: end;
+  /* As the button is in a grid, this is the only way to push it to the right */
+}
+
+@media(min-width: 50em){
+  .justify-self-end-md{
+    justify-self: end
+  }
+}
+
+.vertical-align-center {
+  align-items: center;
+}
+
+:where(.flow >:not(:first-child)) {
+  /* :where has zero specificy, if we had used :not without :where then we cannot change the style
+  as it has higher specificy */
+  margin-top: var(--flow-spacer, 3em);
+  /* The var will choose either --flow-spacer or the default value */
+}
+
+/* General Styling */
 .text-primary-400 {
   color: var(--clr-primary-400);
 }
