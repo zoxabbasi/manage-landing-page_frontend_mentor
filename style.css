@@ -262,6 +262,106 @@ p[data-width="wide"] {
   }
 }
 
+/* Footer */
+.primary-footer {
+  --logo-color: var(--clr-neutral-100);
+}
+
+/* 
+.primary-footer > * > * > *{
+  outline: 2px solid red;
+}
+To check what I'm working on*/
+.primary-footer-wrapper {
+  display: grid;
+  gap: var(--size-700);
+  grid-template-areas:
+    'form'
+    'nav'
+    'logo-social';
+}
+
+
+.primary-footer-logo-social {
+  grid-area: logo-social;
+
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: var(--size-800)
+}
+
+.primary-footer-nav {
+  grid-area: nav;
+}
+
+.primary-footer-form {
+  grid-area: form;
+}
+
+@media (min-width: 50em) {
+  .primary-footer-wrapper {
+    grid-template-areas:
+      'logo-social nav form';
+  }
+
+  .primary-footer-logo-social{
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--size-800)
+  }
+}
+
+@media (max-width: 50em) {
+  .primary-footer-wrapper>* {
+    margin-inline: auto;
+  }
+}
+
+/* Footer nav */
+.footer-nav {
+  columns: 2;
+  gap: max(30vw, 2rem);
+}
+
+.footer-nav a {
+  color: var(--clr-neutral-100);
+  text-decoration: none;
+}
+
+.footer-nav a:is(:hover, :focus) {
+  color: var(--clr-accent-400);
+}
+
+/* Social list */
+.social-list {
+  display: flex;
+  gap: var(--size-600);
+}
+
+.social-icon {
+  width: var(--size-600);
+  aspect-ratio: 1;
+  fill: var(--clr-neutral-100)
+    /* removed the fill property from the svg and adding it using CSS */
+}
+
+.social-list a:where(:hover, :focus) .social-icon {
+  fill: var(--clr-accent-400)
+}
+
+@media(min-width: 50em) {
+  .social-list {
+    gap: var(--size-300);
+  }
+
+  .social-icon {
+    width: var(--size-500);
+  }
+}
+
+
 /* cta */
 .cta {
   position: relative;
@@ -345,8 +445,8 @@ p[data-width="wide"] {
   /* As the button is in a grid, this is the only way to push it to the right */
 }
 
-@media(min-width: 50em){
-  .justify-self-end-md{
+@media(min-width: 50em) {
+  .justify-self-end-md {
     justify-self: end
   }
 }
