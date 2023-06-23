@@ -137,7 +137,7 @@ p:not([class]) {
 }
 
 p[data-width="wide"] {
-  max-width: 100%;
+  max-width: 42ch;
 }
 
 /* Button */
@@ -163,6 +163,10 @@ p[data-width="wide"] {
 .button[data-type="inverted"] {
   background-color: var(--clr-neutral-100);
   color: var(--clr-accent-400);
+}
+
+.button[data-shadow="none"] {
+  box-shadow: none;
 }
 
 .button:hover,
@@ -297,6 +301,20 @@ To check what I'm working on*/
 
 .primary-footer-form {
   grid-area: form;
+
+  display: grid;
+  align-content: space-between;
+}
+
+.primary-footer form {
+  display: flex;
+  gap: var(--size-200);
+}
+
+input:where([type="email"], [type="text"]) {
+  border-radius: 100vw;
+  border: 0;
+  padding: var(--size-300) var(--size-400);
 }
 
 @media (min-width: 50em) {
@@ -305,7 +323,7 @@ To check what I'm working on*/
       'logo-social nav form';
   }
 
-  .primary-footer-logo-social{
+  .primary-footer-logo-social {
     align-items: flex-start;
     flex-direction: column;
     justify-content: space-between;
@@ -322,7 +340,7 @@ To check what I'm working on*/
 /* Footer nav */
 .footer-nav {
   columns: 2;
-  gap: max(30vw, 2rem);
+  gap: clamp(var(--size-200), 30vw, var(--size-900));
 }
 
 .footer-nav a {
@@ -394,6 +412,95 @@ To check what I'm working on*/
   position: fixed;
 }
 
+/* Numbered list */
+
+/* .numbered-items{
+  list-style: decimal !important;
+}
+
+.numbered-items ::marker{
+  color: red;
+  font-weight: bold;
+  background-color: greem;
+} 
+ A marker has limitations when it comes to properties that can be applied to them
+*/
+
+.numbered-items {
+  counter-reset: count;
+  /*  It is important to reset the counter so that the numbers reset themselves on a new list
+      "count" is the name of the counter and it can be literally anything*/
+  width: fit-content;
+  margin-inline: auto;
+  /* fit-content is an intrinstic size, it's like min-content(make it as small as you can without causing line breaks)
+   max-content(this won't allow any line breaks) fit-content(will fit the content in the container according to the width of the container,
+   and margin-inline will center it */
+}
+
+.numbered-items li {
+  counter-increment: count;
+  /* Here we are incrementing the counter of every li */
+}
+
+.numbered-items div {
+  display: grid;
+  position: relative;
+  align-items: center;
+  column-gap: var(--size-400);
+  grid-template-columns: min-content 1fr;
+}
+
+.numbered-items__body {
+  grid-column: 1 / -1;
+}
+
+.numbered-items__title {
+  grid-column: 2 /3;
+  grid-row: 1 /2;
+  line-height: 1
+}
+
+@media(min-width: 30em) {
+
+  .numbered-items__body {
+    grid-column: 2 / -1;
+  }
+}
+
+.numbered-items div::before,
+.numbered-items div::after {
+  height: 40px;
+}
+
+.numbered-items div::before {
+  content: "0" counter(count);
+  display: flex;
+  align-items: center;
+  color: var(--clr-neutral-100);
+  font-weight: var(--fw-bold);
+  background-color: var(--clr-accent-400);
+  padding: 0 var(--size-500);
+  border-radius: 100vw;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+@media (max-width: 30em) {
+  .numbered-items div::after {
+    --bg: var(--clr-accent-100);
+    content: "";
+    display: block;
+    z-index: -1;
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    width: 100%;
+    border-radius: 100vw;
+    box-shadow: 5em 0 0 var(--bg);
+    /* Box shadows can't cause any overflow, it's visual only */
+    background: var(--bg);
+  }
+}
+
 /* General Styling */
 .visually-hidden {
   position: absolute;
@@ -410,10 +517,10 @@ To check what I'm working on*/
 
 .container {
   --max-width: 1110px;
-  --padding: 1rem;
+  --container-padding: 1rem;
   /* Locally scoped custom properties */
 
-  width: min(var(--max-width), 100% - (var(--padding) * 2));
+  width: min(var(--max-width), 100% - (var(--container-padding) * 2));
   /* min() will choose the smaller of whatever value we have */
   /* and then subtracting var(--padding) will push the contents away from the side by 1rem */
   /* and the * 2 will make the padding 2 rem */
@@ -462,7 +569,25 @@ To check what I'm working on*/
   /* The var will choose either --flow-spacer or the default value */
 }
 
-/* General Styling */
+.text-center {
+  text-align: center;
+}
+
+.text-center p {
+  margin-inline: auto;
+}
+
+@media(max-width: 50em) {
+  .text-center-sm-only {
+    text-align: center;
+  }
+
+  .text-center-sm-only p {
+    margin-inline: auto;
+  }
+}
+
+
 .text-primary-400 {
   color: var(--clr-primary-400);
 }
@@ -548,6 +673,10 @@ To check what I'm working on*/
 
 .padding-block-700 {
   padding-block: var(--size-700);
+}
+
+.margin-bottom-700 {
+  margin-block-end: var(--size-700)
 }
 
 .display-sm-none {
